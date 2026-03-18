@@ -1,0 +1,104 @@
+@import "tailwindcss";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+
+  /* E-commerce neutral slate + indigo brand */
+  --color-brand-300: #94a3b8; /* slate-400 */
+  --color-brand-400: #818cf8; /* indigo-400 */
+  --color-brand-500: #4f46e5; /* indigo-600 */
+  --color-brand-600: #4338ca; /* indigo-700 */
+  --color-brand-900: #312e81; /* indigo-900 */
+  
+  --animate-fade-in: fade-in 0.6s ease-out forwards;
+  --animate-slide-up: slide-up 0.6s ease-out forwards;
+  --animate-pulse-slow: pulse-slow 4s ease-in-out infinite;
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slide-up {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.9; }
+}
+
+@layer base {
+  :root {
+    --background: #f8fafc; /* Clean light background */
+    --foreground: #0f172a; /* Slate text */
+  }
+
+  .dark {
+    --background: #0a0a0a; /* Premium dark background */
+    --foreground: #f8fafc; /* Crisp white */
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    @apply antialiased min-h-screen overflow-x-hidden font-sans transition-colors duration-500 selection:bg-brand-500/30 selection:text-white;
+  }
+}
+
+@layer components {
+  .brand-card {
+    @apply bg-white dark:bg-[#111111] border border-slate-200 dark:border-white/5 hover:border-brand-500/30 focus-within:border-brand-500/50 hover:bg-slate-50 dark:hover:bg-[#151515] transition-colors duration-300 rounded-sm shadow-sm dark:shadow-none;
+  }
+
+  .brand-glow {
+    /* Kept intentionally blank to remove glowing text effects from the old theme */
+  }
+  
+  .brand-border-glow {
+    /* Kept intentionally blank to remove thick box shadows */
+  }
+  
+  .brand-button {
+    @apply relative overflow-hidden bg-brand-600 text-white font-sans font-semibold tracking-wider uppercase hover:bg-brand-500 transition-all duration-300 rounded shadow-md;
+  }
+  
+  .brand-button::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; width: 50%; height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.5s;
+  }
+  
+  .brand-button:hover::before {
+    left: 150%;
+  }
+
+  .brand-input {
+    @apply bg-transparent border-b border-slate-300 dark:border-white/20 py-3 rounded-none focus:border-brand-500 focus:ring-0 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600 text-slate-800 dark:text-white font-sans;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 dark:bg-[#2a2a2a] rounded;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-brand-500;
+}
